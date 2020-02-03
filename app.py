@@ -1,9 +1,6 @@
 import spotipy
 from spotipy import oauth2
-import sys
-import json
 import urllib.parse as urlparse
-from jinja2 import Environment, PackageLoader, select_autoescape
 from flask import Flask, render_template, request, jsonify
 
 SPOTIPY_CLIENT_ID = '032bb2c730e645968318b1811d084943'
