@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+    <div id="main-div" class="pure-g" style="margin: 30px 30px 0 30px; position: relative">
+      <img src="static/spot.png">
+    </div>
+    <div id="main-div" class="pure-g" style="margin: 10px 60px 0 100px; position: absolute;  left: 0; right: 0;">
+        <button id="view-dashboard" onclick="window.location.href = ' {{ auth }}'" class="pure-button pure-button-primary">login</button>
+    </div>
+
+</body>
+<script>
+$(document).ready(function() {
+    $("#view-dashboard").click(function () {
+       render_view_dashboard_form();
+    });
+
+    function render_view_dashboard_form() {
+        $("#main-div").append(
+    }
+});
+</script>
+
+{% endblock %}
