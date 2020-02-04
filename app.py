@@ -65,6 +65,13 @@ def callback():
         print(track)
         print(preview_url)
         print(artist)
+    searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
+    searchItems = searchResults['artists']['items']
+    if len(searchItems) > 0:
+        artist = searchItems[0]
+        picture =  artist['images'][len(artist['images'])-1]['url']
+        print(artist['name'], picture) 
+
     return render_template('login.html', auth=access_token)
 
 
