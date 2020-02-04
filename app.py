@@ -69,8 +69,17 @@ def callback():
     searchItems = searchResults['artists']['items']
     if len(searchItems) > 0:
         artist = searchItems[0]
-        picture =  artist['images'][len(artist['images'])-1]['url']
-        print(artist['name'], picture) 
+        picture = artist['images'][len(artist['images'])-1]['url']
+        print(artist['name'], picture)
+
+    trackSearchResults = sp.search(
+        q='track:' + 'invaders must die', type='track')
+    trackSearchItems = trackSearchResults['tracks']['items']
+    if len(trackSearchItems) > 0:
+        track = trackSearchItems[0]
+        print(track['name'])
+        print(track['preview_url'])
+        print(track['artists'][0]['name'])
 
     return render_template('login.html', auth=access_token)
 
