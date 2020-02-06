@@ -8,13 +8,13 @@ install dependencies
 
 ```npm i ```
 
-compile js
+compile js&sass
 
 ```gulp build```
 
-compile sass
+dev mode - reloading
 
-```gulp sass```
+```gulp dev```
 
 run server
 
