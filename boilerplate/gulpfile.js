@@ -8,11 +8,12 @@ const path = {
   ENTRY_POINT: "./client/index.js"
 };
 
-gulp.task("build", function() {
+gulp.task("build", function(done) {
   browserify(path.ENTRY_POINT)
     .transform("babelify", { presets: ["env", "react"] })
     .bundle()
     .pipe(fs.createWriteStream(path.MINIFIED_OUT));
+  done();
 });
 
 gulp.task("sass", function() {
