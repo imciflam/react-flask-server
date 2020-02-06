@@ -24,3 +24,9 @@ gulp.task("sass", function() {
 });
 
 gulp.task("build", gulp.series("sass", "react"));
+
+gulp.task("dev", function() {
+  gulp.watch("client/**/*.scss", gulp.series("sass")),
+    gulp.watch("client/**/*.js", gulp.series("react"));
+  return;
+});
