@@ -8,7 +8,7 @@ const path = {
   ENTRY_POINT: "./client/index.js"
 };
 
-gulp.task("build", function(done) {
+gulp.task("react", function(done) {
   browserify(path.ENTRY_POINT)
     .transform("babelify", { presets: ["env", "react"] })
     .bundle()
@@ -22,3 +22,5 @@ gulp.task("sass", function() {
     .pipe(sass().on("error", sass.logError))
     .pipe(gulp.dest("./static/css"));
 });
+
+gulp.task("build", gulp.series("sass", "react"));
