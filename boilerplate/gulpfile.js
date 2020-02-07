@@ -5,7 +5,14 @@ var sass = require("gulp-sass");
 
 gulp.task("react", function(done) {
   browserify("./client/index.js")
-    .transform("babelify", { presets: ["env", "react"] })
+    .transform(
+      "babelify",
+      { presets: ["env", "react"] },
+      {
+        global: true, // also apply to node_modules
+        NODE_ENV: "production"
+      }
+    )
     .bundle()
     .pipe(fs.createWriteStream("static/build.min.js"));
   done();
