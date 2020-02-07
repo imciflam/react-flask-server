@@ -3,16 +3,11 @@ var browserify = require("browserify");
 var gulp = require("gulp");
 var sass = require("gulp-sass");
 
-const path = {
-  MINIFIED_OUT: "static/build.min.js",
-  ENTRY_POINT: "./client/index.js"
-};
-
 gulp.task("react", function(done) {
-  browserify(path.ENTRY_POINT)
+  browserify("./client/index.js")
     .transform("babelify", { presets: ["env", "react"] })
     .bundle()
-    .pipe(fs.createWriteStream(path.MINIFIED_OUT));
+    .pipe(fs.createWriteStream("static/build.min.js"));
   done();
 });
 
