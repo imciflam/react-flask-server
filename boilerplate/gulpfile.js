@@ -18,7 +18,18 @@ gulp.task("sass", function() {
     .pipe(gulp.dest("./static/css"));
 });
 
-gulp.task("build", gulp.series("sass", "react"));
+gulp.task("apply-prod-environment", function(done) {
+  process.stdout.write("Setting NODE_ENV to 'production'" + "\n");
+  process.env.NODE_ENV = "production";
+  if (process.env.NODE_ENV != "production") {
+    throw new Error("Failed to set NODE_ENV to production!!!!");
+  } else {
+    process.stdout.write("Successfully set NODE_ENV to production" + "\n");
+  }
+  done();
+});
+
+gulp.task("serve", gulp.series("apply-prod-environment", "sass", "react"));
 
 gulp.task("dev", function() {
   gulp.watch("client/**/*.scss", gulp.series("sass")),
