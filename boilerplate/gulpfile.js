@@ -3,6 +3,23 @@ var browserify = require("browserify")
 var gulp = require("gulp")
 var sass = require("gulp-sass")
 var minify = require("gulp-csso")
+var buffer = require("vinyl-buffer")
+var source = require("vinyl-source-stream")
+var uglify = require("gulp-uglify")
+
+gulp.task("build", function() {
+  return browserify({
+    entries: "./client/components/index.js",
+    extensions: [".jsx"],
+    debug: true
+  })
+    .transform("babelify", { presets: ["env", "react"] })
+    .bundle()
+    .pipe(source("bundle.js"))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest("static"))
+})
 
 gulp.task("react", function(done) {
   browserify("./client/components/index.js")
