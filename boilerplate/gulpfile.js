@@ -8,6 +8,8 @@ var source = require("vinyl-source-stream")
 var uglify = require("gulp-uglify")
 
 gulp.task("build", function() {
+  process.env.NODE_ENV = "production"
+
   return browserify({
     entries: "./client/components/index.js",
     extensions: [".jsx"],
