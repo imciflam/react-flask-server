@@ -2,6 +2,7 @@ var fs = require("fs")
 var browserify = require("browserify")
 var gulp = require("gulp")
 var sass = require("gulp-sass")
+var minify = require("gulp-csso")
 
 gulp.task("react", function(done) {
   browserify("./client/components/index.js")
@@ -22,6 +23,8 @@ gulp.task("sass", function() {
   return gulp
     .src("./client/sass/**/*.scss")
     .pipe(sass().on("error", sass.logError))
+    .pipe(gulp.dest("./static/css"))
+    .pipe(minify())
     .pipe(gulp.dest("./static/css"))
 })
 

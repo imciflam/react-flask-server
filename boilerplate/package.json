@@ -20,6 +20,7 @@
     "create-react-class": "^15.6.3",
     "del": "^5.1.0",
     "gulp": "^4.0.0",
+    "gulp-csso": "^4.0.1",
     "gulp-load-plugins": "^2.0.2",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
