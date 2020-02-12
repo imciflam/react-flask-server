@@ -42,14 +42,9 @@ def getToken():
 
 
 def Auth():
-    auth_url = getSPOauthURI()
+    auth_url = sp_oauth.get_authorize_url()
     print("Auth")
     return render_template('base.html', auth=auth_url)
-
-
-def getSPOauthURI():
-    auth_url = sp_oauth.get_authorize_url()
-    return auth_url
 
 
 @app.route('/callback')
@@ -85,7 +80,8 @@ def callback():
     #    print(track['preview_url'])
     #    print(track['artists'][0]['name'])
 
-    return render_template('base.html', auth=access_token)
+    # change this page to results later or through spa
+    # return render_template('base.html', auth=access_token)
 
 
 if __name__ == '__main__':
