@@ -84,7 +84,7 @@ def callback():
 
     # change this page to results later or through spa
 
-    return render_template('main.html')
+    return render_template('login.html')
 
 
 if __name__ == "__main__":
