@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "autoprefixer": "^9.7.4",
+    "axios": "^0.19.2",
     "browser-sync": "^2.26.7",
     "browserify": "^16.0.0",
     "create-react-class": "^15.6.3",
