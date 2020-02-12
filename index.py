@@ -1,7 +1,7 @@
 import spotipy
 from spotipy import oauth2
 import urllib.parse as urlparse
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, make_response, redirect, url_for
 
 SPOTIPY_CLIENT_ID = '032bb2c730e645968318b1811d084943'
 SPOTIPY_CLIENT_SECRET = '5892fdf2a41948e1ae73078e4cecb6f2'
@@ -11,7 +11,7 @@ sp_oauth = oauth2.SpotifyOAuth(
     SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIRECT_URI, scope=SCOPE)
 
 app = Flask(__name__, template_folder='client', static_url_path='/static')
-
+sp = ''
 # Comment out in production, stops static caching
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 5
 
@@ -56,16 +56,8 @@ def callback():
     # gets fb token if auto-d through fb!
     # throw warning about not being able to log in with fb
     sp = spotipy.Spotify(access_token)
-    results = sp.current_user_top_tracks(
-        limit=5, offset=0, time_range='short_term')
-    for item in results['items']:
-        track = item['name']
-        preview_url = item['preview_url']
-        artist = item['artists'][0]['name']
-        print(track)
-        print(preview_url)
-        print(artist)
-        # searching for artist and track
+
+    # searching for artist and track
     #searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
     #searchItems = searchResults['artists']['items']
     # if len(searchItems) > 0:
@@ -83,8 +75,20 @@ def callback():
     #    print(track['artists'][0]['name'])
 
     # change this page to results later or through spa
+    return redirect(url_for('list'))
 
-    return render_template('login.html')
+
+@app.route('/list')
+def list():
+    results = sp.current_user_top_tracks(
+        limit=5, offset=0, time_range='short_term')
+    for item in results['items']:
+        track = item['name']
+        preview_url = item['preview_url']
+        artist = item['artists'][0]['name']
+        print(track)
+        print(preview_url)
+        print(artist)
 
 
 if __name__ == "__main__":
