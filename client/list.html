@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>First server</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="static/css/styles.css" type="text/css" />
+  </head>
+  <body>
+    {% for message in data %}
+    <p>{{ message.artist }}</p>
+    <p>{{ message.track }}</p>
+    <p>{{ message.preview_url }}</p>
+    {% endfor %}
+  </body>
+</html>

@@ -82,13 +82,16 @@ def callback():
 def list():
     results = sp.current_user_top_tracks(
         limit=5, offset=0, time_range='short_term')
+    top_tracks_data = []
     for item in results['items']:
         track = item['name']
         preview_url = item['preview_url']
         artist = item['artists'][0]['name']
-        print(track)
-        print(preview_url)
-        print(artist)
+        top_track_data = {'artist': artist,
+                          'track': track, 'preview_url': preview_url}
+        top_tracks_data.append(top_track_data)
+    print()
+    return render_template('list.html', data=top_tracks_data)
 
 
 if __name__ == "__main__":
