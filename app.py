@@ -18,8 +18,7 @@ def main():
     parsed = urlparse.urlparse(request.url)
     if 'code' in urlparse.parse_qs(parsed.query):
         access_token = getToken()
-        print("Access token available! Trying to get user information..\.")
-        return showQuizlist(access_token)
+        print("main() - access token available")
     else:
         return Auth()
 
