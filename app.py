@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def hello():
+def main():
     parsed = urlparse.urlparse(request.url)
     if 'code' in urlparse.parse_qs(parsed.query):
         access_token = getToken()
@@ -43,7 +43,8 @@ def getToken():
 
 def Auth():
     auth_url = getSPOauthURI()
-    return render_template('login.html', auth=auth_url)
+    print("Auth")
+    return render_template('base.html', auth=auth_url)
 
 
 def getSPOauthURI():
@@ -55,6 +56,8 @@ def getSPOauthURI():
 def callback():
     access_token = getToken()
     global sp
+    # gets fb token if auto-d through fb!
+    # throw warning about not being able to log in with fb
     sp = spotipy.Spotify(access_token)
     results = sp.current_user_top_tracks(
         limit=5, offset=0, time_range='short_term')
@@ -65,23 +68,24 @@ def callback():
         print(track)
         print(preview_url)
         print(artist)
-    searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
-    searchItems = searchResults['artists']['items']
-    if len(searchItems) > 0:
-        artist = searchItems[0]
-        picture = artist['images'][len(artist['images'])-1]['url']
-        print(artist['name'], picture)
+    # searching for artist and track
+    #searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
+    #searchItems = searchResults['artists']['items']
+    # if len(searchItems) > 0:
+    #    artist = searchItems[0]
+    #    picture = artist['images'][len(artist['images'])-1]['url']
+    #    print(artist['name'], picture)
 
-    trackSearchResults = sp.search(
-        q='track:' + 'invaders must die', type='track')
-    trackSearchItems = trackSearchResults['tracks']['items']
-    if len(trackSearchItems) > 0:
-        track = trackSearchItems[0]
-        print(track['name'])
-        print(track['preview_url'])
-        print(track['artists'][0]['name'])
+    # trackSearchResults = sp.search(
+    #    q='track:' + 'invaders must die', type='track')
+    #trackSearchItems = trackSearchResults['tracks']['items']
+    # if len(trackSearchItems) > 0:
+    #    track = trackSearchItems[0]
+    #    print(track['name'])
+    #    print(track['preview_url'])
+    #    print(track['artists'][0]['name'])
 
-    return render_template('login.html', auth=access_token)
+    return render_template('base.html', auth=access_token)
 
 
 if __name__ == '__main__':

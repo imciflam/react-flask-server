@@ -5,6 +5,12 @@
     <title>Spotify</title>
   </head>
   <body>
-    {% block container %}{% endblock %}
+    <button
+      id="view-dashboard"
+      onclick="window.location.href = ' {{ auth }}'"
+      class="pure-button pure-button-primary"
+    >
+      login
+    </button>
   </body>
 </html>
