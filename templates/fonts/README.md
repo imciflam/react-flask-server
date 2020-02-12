@@ -1,1 +1,0 @@
-Folder for fonts (woff, woff2)
