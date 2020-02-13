@@ -16,18 +16,36 @@ class LoginButton extends React.Component {
     axios
       .get("/token")
       .then(function(response) {
-        window.location.href = response.data;
+        const strWindowFeatures =
+          "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+        const URL = response.data;
+        window.open(URL, "_blank", strWindowFeatures);
       })
       .catch(function(error) {
         console.log(error);
       });
   }
+
+  topInformationGetter(e) {
+    e.preventDefault();
+    axios
+      .get("/list")
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <div>
         {this.state.showButton ? (
           <button onClick={this.authTokenGetter}>login</button>
         ) : null}
+
+        <button onClick={this.topInformationGetter}>get tracks</button>
       </div>
     );
   }

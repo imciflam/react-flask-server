@@ -2,6 +2,7 @@ import spotipy
 from spotipy import oauth2
 import urllib.parse as urlparse
 from flask import Flask, render_template, request, jsonify, make_response, redirect, url_for
+import json
 
 SPOTIPY_CLIENT_ID = '032bb2c730e645968318b1811d084943'
 SPOTIPY_CLIENT_SECRET = '5892fdf2a41948e1ae73078e4cecb6f2'
@@ -58,8 +59,8 @@ def callback():
     sp = spotipy.Spotify(access_token)
 
     # searching for artist and track
-    #searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
-    #searchItems = searchResults['artists']['items']
+    # searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
+    # searchItems = searchResults['artists']['items']
     # if len(searchItems) > 0:
     #    artist = searchItems[0]
     #    picture = artist['images'][len(artist['images'])-1]['url']
@@ -67,7 +68,7 @@ def callback():
 
     # trackSearchResults = sp.search(
     #    q='track:' + 'invaders must die', type='track')
-    #trackSearchItems = trackSearchResults['tracks']['items']
+    # trackSearchItems = trackSearchResults['tracks']['items']
     # if len(trackSearchItems) > 0:
     #    track = trackSearchItems[0]
     #    print(track['name'])
@@ -75,10 +76,11 @@ def callback():
     #    print(track['artists'][0]['name'])
 
     # change this page to results later or through spa
-    return redirect(url_for('list'))
+    # return redirect(url_for('list'))
+    return render_template('login.html')
 
 
-@app.route('/list')
+@app.route('/list', methods=['GET', 'POST'])
 def list():
     results = sp.current_user_top_tracks(
         limit=5, offset=0, time_range='short_term')
@@ -90,8 +92,27 @@ def list():
         top_track_data = {'artist': artist,
                           'track': track, 'preview_url': preview_url}
         top_tracks_data.append(top_track_data)
-    print()
-    return render_template('list.html', data=top_tracks_data)
+    print(top_tracks_data)
+    return json.dumps(top_tracks_data)
+
+
+@app.route('/search', methods=['POST'])
+def searchResults():
+    # searching for artist and track
+    searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
+    searchItems = searchResults['artists']['items']
+    if len(searchItems) > 0:
+        artist = searchItems[0]
+        picture = artist['images'][len(artist['images'])-1]['url']
+        print(artist['name'], picture)
+    trackSearchResults = sp.search(
+        q='track:' + 'invaders must die', type='track')
+    trackSearchItems = trackSearchResults['tracks']['items']
+    if len(trackSearchItems) > 0:
+        track = trackSearchItems[0]
+        print(track['name'])
+        print(track['preview_url'])
+        print(track['artists'][0]['name'])
 
 
 if __name__ == "__main__":
