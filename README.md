@@ -10,7 +10,7 @@ install dependencies
 
 compile js&sass
 
-```gulp build```
+```gulp serve```
 
 dev mode - reloading
 
