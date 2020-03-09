@@ -101,26 +101,23 @@ def cnnlist():
                            json=json.dumps(top_tracks_data), headers=headers)
 
     final_results = searchResults(json.loads(answer.text))
-    print("---")
     return json.dumps(final_results)
 
 
 def searchResults(input_data):
     # searching for artist and track
     for element in input_data:
-        print(element)
         element[0] = element[0].replace('_', ' ')
         element[0] = element[0].replace('.wav', '')
         searchItems = sp.search(q='track:' + element[0], type='track')
-        track = searchItems["tracks"]["items"][0]
-        if "preview_url" in track and track['preview_url'] != None:
-            element.append(track['name'])
-            element.append(track['preview_url'])
-            element.append(track['artists'][0]['name'])
-            print(element)
-            print("---")
-    print("---")
-    print(input_data)
+        if searchItems["tracks"]['items'] != []:
+            track = searchItems["tracks"]["items"][0]
+            if "preview_url" in track and track['preview_url'] != None:
+                element.append(track['artists'][0]['name'])
+                element.append(track['name'])
+                element.append(track['preview_url'])
+                element.pop(0)
+                element.append(element.pop(0))
     return input_data
 
 
