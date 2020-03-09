@@ -53,7 +53,7 @@ gast==0.2.2
 gevent==1.4.0
 greenlet==0.4.15
 grpcio==1.19.0
-gunicorn==17.5
+gunicorn==19.5.0
 h11==0.8.1
 h2==3.1.1
 h5py==2.9.0
