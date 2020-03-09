@@ -58,26 +58,6 @@ def callback():
     # gets fb token if auto-d through fb!
     # throw warning about not being able to log in with fb
     sp = spotipy.Spotify(access_token)
-
-    # searching for artist and track
-    # searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
-    # searchItems = searchResults['artists']['items']
-    # if len(searchItems) > 0:
-    #    artist = searchItems[0]
-    #    picture = artist['images'][len(artist['images'])-1]['url']
-    #    print(artist['name'], picture)
-
-    # trackSearchResults = sp.search(
-    #    q='track:' + 'invaders must die', type='track')
-    # trackSearchItems = trackSearchResults['tracks']['items']
-    # if len(trackSearchItems) > 0:
-    #    track = trackSearchItems[0]
-    #    print(track['name'])
-    #    print(track['preview_url'])
-    #    print(track['artists'][0]['name'])
-
-    # change this page to results later or through spa
-    # return redirect(url_for('list'))
     return render_template('login.html')
 
 
@@ -143,17 +123,15 @@ def knnlist():
 def getTopSongByArtist(input_data):
     # searching for artist and track
     for element in input_data:
-        print(element)
         results = sp.search(q='artist:' + element[0], type='artist')
         artist_uri = 'spotify:artist:'+results["artists"]["items"][0]["id"]
         top_songs = sp.artist_top_tracks(artist_uri)
         top_songs_list = []
         for track in top_songs['tracks'][:10]:
-            print('track : ' + track['name'])
             if "preview_url" in track and track['preview_url'] != None:
-                print('audio : ' + track['preview_url'])
                 element.append(track['name'])
                 element.append(track['preview_url'])
+                element.append(element.pop(1))
                 break
     return input_data
 

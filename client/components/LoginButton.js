@@ -37,7 +37,7 @@ class LoginButton extends React.Component {
 
   topInformationGetter(e) {
     e.preventDefault();
-    axios.all([axios.get("/knnlist"), axios.get("/list")]).then(
+    axios.all([axios.get("/knnlist"), axios.get("/cnnlist")]).then(
       axios.spread((knn, cnn) => {
         let arr1 = knn.data;
         let data1 = arr1.map(element => [...element, "knn"]);
