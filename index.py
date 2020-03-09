@@ -99,7 +99,29 @@ def cnnlist():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5001/cnn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    return answer.text
+
+    final_results = searchResults(json.loads(answer.text))
+    print("---")
+    return json.dumps(final_results)
+
+
+def searchResults(input_data):
+    # searching for artist and track
+    for element in input_data:
+        print(element)
+        element[0] = element[0].replace('_', ' ')
+        element[0] = element[0].replace('.wav', '')
+        searchItems = sp.search(q='track:' + element[0], type='track')
+        track = searchItems["tracks"]["items"][0]
+        if "preview_url" in track and track['preview_url'] != None:
+            element.append(track['name'])
+            element.append(track['preview_url'])
+            element.append(track['artists'][0]['name'])
+            print(element)
+            print("---")
+    print("---")
+    print(input_data)
+    return input_data
 
 
 @app.route('/knnlist', methods=['GET', 'POST'])
@@ -116,8 +138,7 @@ def knnlist():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5002/knn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    print("---")
-    print(answer.text)
+
     final_results = getTopSongByArtist(json.loads(answer.text))
     return json.dumps(final_results)
 
@@ -138,24 +159,6 @@ def getTopSongByArtist(input_data):
                 element.append(track['preview_url'])
                 break
     return input_data
-
-
-def searchResults(input_data):
-    # searching for artist and track
-    searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
-    searchItems = searchResults['artists']['items']
-    if len(searchItems) > 0:
-        artist = searchItems[0]
-        picture = artist['images'][len(artist['images'])-1]['url']
-        print(artist['name'], picture)
-    trackSearchResults = sp.search(
-        q='track:' + 'invaders must die', type='track')
-    trackSearchItems = trackSearchResults['tracks']['items']
-    if len(trackSearchItems) > 0:
-        track = trackSearchItems[0]
-        print(track['name'])
-        print(track['preview_url'])
-        print(track['artists'][0]['name'])
 
 
 if __name__ == "__main__":
