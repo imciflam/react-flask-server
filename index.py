@@ -81,8 +81,8 @@ def callback():
     return render_template('login.html')
 
 
-@app.route('/list', methods=['GET', 'POST'])
-def list():
+@app.route('/cnnlist', methods=['GET', 'POST'])
+def cnnlist():
     results = sp.current_user_top_tracks(
         limit=5, offset=0, time_range='medium_term')
     if results == []:
@@ -96,9 +96,6 @@ def list():
         top_track_data = {'artist': artist,
                           'track': track, 'preview_url': preview_url}
         top_tracks_data.append(top_track_data)
-    # print(type(top_tracks_data)) list
-    # print(type(json.dumps(top_tracks_data)))  # str
-    # json.dumps(top_tracks_data)
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5001/cnn',
                            json=json.dumps(top_tracks_data), headers=headers)
@@ -116,18 +113,34 @@ def knnlist():
     for item in results['items']:
         artist = item['artists'][0]['name']
         top_tracks_data.append(artist)
-    # print(type(top_tracks_data)) list
-    # print(type(json.dumps(top_tracks_data)))  # str
-    # json.dumps(top_tracks_data)
-    print(top_tracks_data)
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5002/knn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    return answer.text
+    print("---")
+    print(answer.text)
+    final_results = getTopSongByArtist(json.loads(answer.text))
+    return json.dumps(final_results)
 
 
-@app.route('/search', methods=['POST'])
-def searchResults():
+def getTopSongByArtist(input_data):
+    # searching for artist and track
+    for element in input_data:
+        print(element)
+        results = sp.search(q='artist:' + element[0], type='artist')
+        artist_uri = 'spotify:artist:'+results["artists"]["items"][0]["id"]
+        top_songs = sp.artist_top_tracks(artist_uri)
+        top_songs_list = []
+        for track in top_songs['tracks'][:10]:
+            print('track : ' + track['name'])
+            if "preview_url" in track and track['preview_url'] != None:
+                print('audio : ' + track['preview_url'])
+                element.append(track['name'])
+                element.append(track['preview_url'])
+                break
+    return input_data
+
+
+def searchResults(input_data):
     # searching for artist and track
     searchResults = sp.search(q='artist:' + 'the prodigy', type='artist')
     searchItems = searchResults['artists']['items']
