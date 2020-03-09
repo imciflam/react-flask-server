@@ -2,13 +2,17 @@ import React from "react";
 import axios from "axios";
 
 class LoginButton extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      showButton: true
+      showButton: true,
+      value: ""
     };
     this.authTokenGetter = this.authTokenGetter.bind(this);
     this.interleave = this.interleave.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   authTokenGetter(e) {
     e.preventDefault();
@@ -52,6 +56,36 @@ class LoginButton extends React.Component {
     );
   }
 
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    axios
+      .all([
+        axios.post("/knnitem", JSON.stringify(this.state.value), {
+          headers: { "Content-Type": "application/json" }
+        }),
+        axios.post("/cnnitem", JSON.stringify(this.state.value), {
+          headers: { "Content-Type": "application/json" }
+        })
+      ])
+      .then(
+        axios.spread((knn, cnn) => {
+          let arr1 = knn.data;
+          let data1 = arr1.map(element => [...element, "knn"]);
+          let arr2 = cnn.data;
+          let data2 = arr2.map(element => [...element, "cnn"]);
+          let newArr = [];
+          for (let i = 0; i < data1.length; i++) {
+            newArr.push(data1[i], data2[i]);
+          }
+          console.log(newArr);
+        })
+      );
+  }
+
   render() {
     return (
       <div>
@@ -60,6 +94,18 @@ class LoginButton extends React.Component {
         ) : null}
 
         <button onClick={this.topInformationGetter}>get tracks</button>
+
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Favourite band:
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+          </label>
+          <input type="submit" value="Отправить" />
+        </form>
       </div>
     );
   }
