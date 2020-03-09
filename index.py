@@ -105,6 +105,27 @@ def list():
     return answer.text
 
 
+@app.route('/knnlist', methods=['GET', 'POST'])
+def knnlist():
+    results = sp.current_user_top_tracks(
+        limit=5, offset=0, time_range='medium_term')
+    if results == []:
+        results = sp.current_user_top_tracks(
+            limit=5, offset=0, time_range='long_term')
+    top_tracks_data = []
+    for item in results['items']:
+        artist = item['artists'][0]['name']
+        top_tracks_data.append(artist)
+    # print(type(top_tracks_data)) list
+    # print(type(json.dumps(top_tracks_data)))  # str
+    # json.dumps(top_tracks_data)
+    print(top_tracks_data)
+    headers = {'Content-Type': 'application/json'}
+    answer = requests.post('http://127.0.0.1:5002/knn',
+                           json=json.dumps(top_tracks_data), headers=headers)
+    return answer.text
+
+
 @app.route('/search', methods=['POST'])
 def searchResults():
     # searching for artist and track

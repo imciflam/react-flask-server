@@ -8,6 +8,7 @@ class LoginButton extends React.Component {
       showButton: true
     };
     this.authTokenGetter = this.authTokenGetter.bind(this);
+    this.interleave = this.interleave.bind(this);
   }
   authTokenGetter(e) {
     e.preventDefault();
@@ -26,18 +27,29 @@ class LoginButton extends React.Component {
       });
   }
 
+  interleave(arr, arr2) {
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      newArr.push(arr[i], arr2[i]);
+    }
+    return newArr;
+  }
+
   topInformationGetter(e) {
     e.preventDefault();
-    axios
-      .get("/list")
-      .then(response => {
-        let arr = response.data;
-        let data = arr.map(element => [...element, "cnn"]);
-        console.log(data);
+    axios.all([axios.get("/knnlist"), axios.get("/list")]).then(
+      axios.spread((knn, cnn) => {
+        let arr1 = knn.data;
+        let data1 = arr1.map(element => [...element, "knn"]);
+        let arr2 = cnn.data;
+        let data2 = arr2.map(element => [...element, "cnn"]);
+        let newArr = [];
+        for (let i = 0; i < data1.length; i++) {
+          newArr.push(data1[i], data2[i]);
+        }
+        console.log(newArr);
       })
-      .catch(error => {
-        console.log(error);
-      });
+    );
   }
 
   render() {
