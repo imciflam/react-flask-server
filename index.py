@@ -3,6 +3,7 @@ from spotipy import oauth2
 import urllib.parse as urlparse
 from flask import Flask, render_template, request, jsonify, make_response, redirect, url_for
 import json
+import requests
 
 SPOTIPY_CLIENT_ID = '032bb2c730e645968318b1811d084943'
 SPOTIPY_CLIENT_SECRET = '5892fdf2a41948e1ae73078e4cecb6f2'
@@ -83,7 +84,10 @@ def callback():
 @app.route('/list', methods=['GET', 'POST'])
 def list():
     results = sp.current_user_top_tracks(
-        limit=5, offset=0, time_range='short_term')
+        limit=5, offset=0, time_range='medium_term')
+    if results == []:
+        results = sp.current_user_top_tracks(
+            limit=5, offset=0, time_range='long_term')
     top_tracks_data = []
     for item in results['items']:
         track = item['name']
@@ -92,8 +96,13 @@ def list():
         top_track_data = {'artist': artist,
                           'track': track, 'preview_url': preview_url}
         top_tracks_data.append(top_track_data)
-    print(top_tracks_data)
-    return json.dumps(top_tracks_data)
+    # print(type(top_tracks_data)) list
+    # print(type(json.dumps(top_tracks_data)))  # str
+    # json.dumps(top_tracks_data)
+    headers = {'Content-Type': 'application/json'}
+    answer = requests.post('http://127.0.0.1:5001/cnn',
+                           json=json.dumps(top_tracks_data), headers=headers)
+    return answer.text
 
 
 @app.route('/search', methods=['POST'])
