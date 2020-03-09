@@ -30,10 +30,12 @@ class LoginButton extends React.Component {
     e.preventDefault();
     axios
       .get("/list")
-      .then(function(response) {
-        console.log(response);
+      .then(response => {
+        let arr = response.data;
+        let data = arr.map(element => [...element, "cnn"]);
+        console.log(data);
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log(error);
       });
   }
