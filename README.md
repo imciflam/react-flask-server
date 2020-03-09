@@ -1,6 +1,6 @@
 # spotify-flask-server
 
-### for dev purposes: 
+### for final build: 
 
 install dependencies 
 
@@ -12,9 +12,17 @@ compile js&sass
 
 ```gulp serve```
 
+### for dev: 
+
 dev mode - reloading
 
 ```gulp dev```
+
+or
+
+just compiling esx
+
+```gulp react```
 
 run server
 
