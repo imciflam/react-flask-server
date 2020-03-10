@@ -22,7 +22,6 @@ client_credentials_manager = SpotifyClientCredentials(
 sp_limited = spotipy.Spotify(
     client_credentials_manager=client_credentials_manager)
 
-
 # Comment out in production, stops static caching
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 5
 
@@ -88,7 +87,6 @@ def cnnlist():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5001/cnn',
                            json=json.dumps(top_tracks_data), headers=headers)
-
     final_results = searchResults(json.loads(answer.text))
     return json.dumps(final_results)
 
@@ -118,6 +116,9 @@ def searchResults(input_data):
                 element.append(track['preview_url'])
                 element.pop(0)
                 element.append(element.pop(0))
+        elif searchItems["tracks"]['href'] != []:
+            # can do request again
+            print("no items")
     return input_data
 
 
@@ -135,7 +136,6 @@ def knnlist():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5002/knn',
                            json=json.dumps(top_tracks_data), headers=headers)
-
     final_results = getTopSongByArtist(json.loads(answer.text))
     return json.dumps(final_results)
 
