@@ -157,8 +157,6 @@ def getTopSongByArtist(input_data):
         # get temp token!
         results = sp_limited.search(q=input_data, type='artist')
         artist_uri = 'spotify:artist:'+results["artists"]["items"][0]["id"]
-        print("str")
-        print(artist_uri)
         top_songs = sp_limited.artist_top_tracks(artist_uri)
         top_songs_list = []
         for track in top_songs['tracks'][:5]:
@@ -168,25 +166,23 @@ def getTopSongByArtist(input_data):
         return top_songs_list
     else:
         # searching for artist and track
+        top_five_list = []
         for element in input_data:
             results = sp_limited.search(
                 q=element[0], type='artist')
             if results["artists"]['items'] != []:
                 artist_uri = 'spotify:artist:' + \
                     results["artists"]["items"][0]["id"]
-
-                print("arr")
-                print(artist_uri)
                 top_songs = sp_limited.artist_top_tracks(
                     artist_uri, country='US')
-                print(top_songs)
                 for track in top_songs['tracks'][:10]:
                     if "preview_url" in track and track['preview_url'] != None:
                         element.append(track['name'])
                         element.append(track['preview_url'])
                         element.append(element.pop(1))
+                        top_five_list.append(element)
                         break
-        return input_data
+        return top_five_list[:5]
 
 
 if __name__ == "__main__":
