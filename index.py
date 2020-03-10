@@ -105,11 +105,11 @@ def cnnitem():
 
 
 def searchResults(input_data):
-    # searching for artist and track
+    # searching for track
     for element in input_data:
         element[0] = element[0].replace('_', ' ')
         element[0] = element[0].replace('.wav', '')
-        searchItems = sp_limited.search(q='track:' + element[0], type='track')
+        searchItems = sp_limited.search(q=element[0], type='track')
         if searchItems["tracks"]['items'] != []:
             track = searchItems["tracks"]["items"][0]
             if "preview_url" in track and track['preview_url'] != None:
@@ -155,8 +155,10 @@ def knnitem():
 def getTopSongByArtist(input_data):
     if isinstance(input_data, str):
         # get temp token!
-        results = sp_limited.search(q='artist:' + input_data, type='artist')
+        results = sp_limited.search(q=input_data, type='artist')
         artist_uri = 'spotify:artist:'+results["artists"]["items"][0]["id"]
+        print("str")
+        print(artist_uri)
         top_songs = sp_limited.artist_top_tracks(artist_uri)
         top_songs_list = []
         for track in top_songs['tracks'][:5]:
@@ -172,7 +174,12 @@ def getTopSongByArtist(input_data):
             if results["artists"]['items'] != []:
                 artist_uri = 'spotify:artist:' + \
                     results["artists"]["items"][0]["id"]
-                top_songs = sp_limited.artist_top_tracks(artist_uri)
+
+                print("arr")
+                print(artist_uri)
+                top_songs = sp_limited.artist_top_tracks(
+                    artist_uri, country='US')
+                print(top_songs)
                 for track in top_songs['tracks'][:10]:
                     if "preview_url" in track and track['preview_url'] != None:
                         element.append(track['name'])
