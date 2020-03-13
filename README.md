@@ -1,6 +1,9 @@
 # spotify-flask-server
 
-### for final build: 
+This repo contains the source code for one of the servers of the Anitra music recommendation system.
+Project is under development.
+
+### for prod build: 
 
 install dependencies 
 
@@ -8,19 +11,23 @@ install dependencies
 
 ```npm i ```
 
-compile js&sass
+compile and minify js&sass
 
 ```gulp serve```
 
-### for dev: 
+run server
 
-dev mode - reloading
+```python index.py```
+
+### for dev build: 
+
+dev mode - js/sass reloading included
 
 ```gulp dev```
 
 or
 
-just compiling esx
+just compile js
 
 ```gulp react```
 
