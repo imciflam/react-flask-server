@@ -44,8 +44,8 @@ export class ManualInput extends Component {
 
   render() {
     return (
-      <div>
-        <h1>ManualInput</h1>
+      <div className="landing__item landing__item--manual">
+        <h1 className="visually-hidden">ManualInput</h1>
         <form onSubmit={this.handleSubmit}>
           <label>
             Favourite band:

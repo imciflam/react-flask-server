@@ -1,13 +1,11 @@
 import React from "react";
-import SpotifyAuth from "./SpotifyAuth";
-import ManualInput from "./ManualInput";
+import LandingPage from "../containers/LandingPage";
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <SpotifyAuth />
-        <ManualInput />
+        <LandingPage />
       </div>
     );
   }
