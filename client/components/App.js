@@ -1,4 +1,5 @@
 import React from "react";
+import AudioPlayer from "../containers/AudioPlayer";
 import LandingPage from "../containers/LandingPage";
 import Loader from "../containers/Loader";
 
@@ -6,7 +7,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentScreen: "LandingPage"
+      currentScreen: "LandingPage",
+      tracks: ""
     };
     this.callbackFunction = this.callbackFunction.bind(this);
   }
@@ -18,16 +20,15 @@ class App extends React.Component {
       case "Loader":
         return <Loader />;
       case "AudioPlayer":
-        return <div>yall playin</div>;
+        return <AudioPlayer tracks={this.state.tracks} />;
     }
   }
 
-  callbackFunction(childData) {
-    this.setState({ currentScreen: childData });
+  callbackFunction(childData, outputData = "") {
+    this.setState({ currentScreen: childData, tracks: outputData });
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="App">{this.renderSwitch(this.state.currentScreen)} </div>
     );

@@ -10,8 +10,8 @@ export class SpotifyAuth extends Component {
     this.authTokenGetter = this.authTokenGetter.bind(this);
   }
 
-  switchToLoader() {
-    this.props.parentCallback("Loader");
+  switchScreen(screen, data = "") {
+    this.props.parentCallback(screen, data);
   }
 
   authTokenGetter() {
@@ -23,13 +23,17 @@ export class SpotifyAuth extends Component {
           "location=yes,height=570,width=520,scrollbars=yes,status=yes";
         const URL = response.data;
         window.open(URL, "_blank", strWindowFeatures);
-        this.switchToLoader();
+        this.switchScreen("Loader");
       })
-      /*.then(() => {
-        setTimeout(() => this.topListGetter(), 300); // timeOut for server to fetch token. 300ms is optimal value.
-      })*/
-      .catch(error => {
-        console.log(error);
+      .then(() => {
+        setTimeout(() => this.topListGetter(), 500); // timeOut for server to fetch token. 500ms is optimal value.
+      })
+      .catch(response => {
+        console.log(response);
+        if (response.status === 500) {
+          // or retry if 500
+          this.topListGetter();
+        }
       });
   }
 
@@ -44,7 +48,7 @@ export class SpotifyAuth extends Component {
         for (let i = 0; i < data1.length; i++) {
           newArr.push(data1[i], data2[i]);
         }
-        console.log(newArr);
+        this.switchScreen("AudioPlayer", newArr);
       })
     );
   }
