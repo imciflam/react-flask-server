@@ -51,10 +51,18 @@ input {
 }
 
 .landing__input {
-  width: 50%;
+  width: 70%;
+  border: 1px solid #181818;
+  border-radius: 5px;
+  padding: 2px 5px;
 }
 
-.landing__form {
+::-webkit-input-placeholder {
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.landing__wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -70,8 +78,32 @@ input {
 }
 
 .landing__img {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+}
+
+.landing__img:hover {
+  opacity: 0.8;
+}
+
+.landing__img:active {
+  outline: 0;
+  opacity: 0.9;
+}
+
+.landing__button {
+  margin: 16px 0;
+  padding: 8px 16px;
+  border: 1px solid #181818;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #181818;
+}
+
+.landing__button:focus,
+.landing__input:focus {
+  outline: 0;
 }
 
 @media (min-width: 320px) {

@@ -48,17 +48,19 @@ export class SpotifyAuth extends Component {
     return (
       <div className="landing__item landing__item--auth">
         <h1 className="visually-hidden">SpotifyAuth</h1>
-        <p className="landing__text landing__text--auth">
-          You can either authorize with your Spotify account...
-        </p>
-        {this.state.showButton ? (
-          <input
-            type="image"
-            src="/static/img/Spotify_Icon_RGB_White.png"
-            className="landing__img"
-            onClick={this.authTokenGetter}
-          />
-        ) : null}
+        <div className="landing__wrapper">
+          <p className="landing__text landing__text--auth">
+            You can either authorize with your Spotify account...
+          </p>
+          {this.state.showButton ? (
+            <input
+              type="image"
+              src="/static/img/Spotify_Icon_RGB_White.png"
+              className="landing__img"
+              onClick={this.authTokenGetter}
+            />
+          ) : null}
+        </div>
       </div>
     );
   }

@@ -46,20 +46,24 @@ export class ManualInput extends Component {
     return (
       <div className="landing__item landing__item--manual">
         <h1 className="visually-hidden">ManualInput</h1>
-        <form className="landing__form" onSubmit={this.handleSubmit}>
-          <label htmlFor="landing__input">
-            <p className="landing__text landing__text--manual">
-              ...or just tell us your favorite artist's name.
-            </p>
-          </label>
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-            className="landing__input"
-          />
-          <input type="submit" value="Отправить" />
-        </form>
+        <div className="landing__wrapper">
+          <form className="landing__form" onSubmit={this.handleSubmit}>
+            <label htmlFor="landing__input">
+              <p className="landing__text landing__text--manual">
+                ...or just tell us your favorite artist's name.
+              </p>
+            </label>
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+              className="landing__input"
+              placeholder="The Prodigy..."
+            />
+            <br />
+            <input className="landing__button" type="submit" value="Submit" />
+          </form>
+        </div>
       </div>
     );
   }
