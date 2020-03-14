@@ -47,7 +47,7 @@ export class ManualInput extends Component {
       <div className="landing__item landing__item--manual">
         <h1 className="visually-hidden">ManualInput</h1>
         <form className="landing__form" onSubmit={this.handleSubmit}>
-          <label for="landing__input">
+          <label htmlFor="landing__input">
             <p className="landing__text landing__text--manual">
               ...or just tell us your favorite artist's name.
             </p>

@@ -65,6 +65,11 @@ input {
   color: #181818;
 }
 
+.landing__img {
+  width: 100px;
+  height: 100px;
+}
+
 @media (min-width: 320px) {
   .landing__container {
     flex-direction: row;

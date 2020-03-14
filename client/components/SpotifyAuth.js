@@ -52,7 +52,12 @@ export class SpotifyAuth extends Component {
           You can either authorize with your Spotify account...
         </p>
         {this.state.showButton ? (
-          <button onClick={this.authTokenGetter}>login</button>
+          <input
+            type="image"
+            src="/static/img/Spotify_Icon_RGB_White.png"
+            className="landing__img"
+            onClick={this.authTokenGetter}
+          />
         ) : null}
       </div>
     );
