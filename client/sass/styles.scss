@@ -41,6 +41,8 @@ input {
 }
 
 .landing__item--auth {
+  display: flex;
+  flex-direction: column;
   background-color: #181818;
 }
 
@@ -53,6 +55,14 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.landing__text--auth {
+  color: #ffffff;
+}
+
+.landing__text--manual {
+  color: #181818;
 }
 
 @media (min-width: 320px) {
