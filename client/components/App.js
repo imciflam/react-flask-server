@@ -17,6 +17,8 @@ class App extends React.Component {
         return <LandingPage parentCallback={this.callbackFunction} />;
       case "Loader":
         return <Loader />;
+      case "AudioPlayer":
+        return <div>yall playin</div>;
     }
   }
 
