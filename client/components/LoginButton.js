@@ -9,38 +9,28 @@ class LoginButton extends React.Component {
       value: ""
     };
     this.authTokenGetter = this.authTokenGetter.bind(this);
-    this.interleave = this.interleave.bind(this);
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  authTokenGetter(e) {
-    e.preventDefault();
-
+  authTokenGetter() {
     this.setState({ showButton: false });
     axios
       .get("/token")
-      .then(function(response) {
+      .then(response => {
         const strWindowFeatures =
           "location=yes,height=570,width=520,scrollbars=yes,status=yes";
         const URL = response.data;
         window.open(URL, "_blank", strWindowFeatures);
       })
-      .catch(function(error) {
+      .then(() => {
+        setTimeout(() => this.topListGetter(), 250); // timeOut for server to fetch token. 250ms is optimal value.
+      })
+      .catch(error => {
         console.log(error);
       });
   }
 
-  interleave(arr, arr2) {
-    let newArr = [];
-    for (let i = 0; i < arr.length; i++) {
-      newArr.push(arr[i], arr2[i]);
-    }
-    return newArr;
-  }
-
-  topInformationGetter(e) {
-    e.preventDefault();
+  topListGetter() {
     axios.all([axios.get("/knnlist"), axios.get("/cnnlist")]).then(
       axios.spread((knn, cnn) => {
         let arr1 = knn.data;
@@ -82,6 +72,7 @@ class LoginButton extends React.Component {
             newArr.push(data1[i], data2[i]);
           }
           console.log(newArr);
+          // deezer api as a fallback?
         })
       );
   }
@@ -92,8 +83,6 @@ class LoginButton extends React.Component {
         {this.state.showButton ? (
           <button onClick={this.authTokenGetter}>login</button>
         ) : null}
-
-        <button onClick={this.topInformationGetter}>get tracks</button>
 
         <form onSubmit={this.handleSubmit}>
           <label>

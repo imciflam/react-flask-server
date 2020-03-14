@@ -95,10 +95,12 @@ def cnnlist():
 def cnnitem():
     input_data = request.json
     top_tracks_data = getTopSongByArtist(input_data)
+    print(top_tracks_data)
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5001/cnn',
                            json=json.dumps(top_tracks_data), headers=headers)
     final_results = searchResults(json.loads(answer.text))
+    print(final_results)
     return json.dumps(final_results)
 
 
@@ -162,7 +164,10 @@ def getTopSongByArtist(input_data):
         for track in top_songs['tracks'][:5]:
             if "preview_url" in track and track['preview_url'] != None:
                 top_songs_list.append(
-                    {'artist': input_data, 'track': track['name'], 'preview_url': track['preview_url']})
+                    {'artist': input_data,
+                     'track': track['name'],
+                     'preview_url': track['preview_url']})
+                # 'picture': track['album']['images'][0]['url']
         return top_songs_list
     else:
         # searching for artist and track
@@ -180,6 +185,7 @@ def getTopSongByArtist(input_data):
                         element.append(track['name'])
                         element.append(track['preview_url'])
                         element.append(element.pop(1))
+                        element.append(track['album']['images'][0]['url'])
                         top_five_list.append(element)
                         break
         return top_five_list[:5]
