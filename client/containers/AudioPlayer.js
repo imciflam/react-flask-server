@@ -9,7 +9,7 @@ export class AudioPlayer extends Component {
         <ul>
           {this.props.tracks.map(element => {
             return (
-              <li>
+              <li key={this.props.tracks.indexOf(element)}>
                 <p>{element[0]}</p>
                 <p>{element[1]}</p>
                 <p>
