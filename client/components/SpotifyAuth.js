@@ -10,6 +10,10 @@ export class SpotifyAuth extends Component {
     this.authTokenGetter = this.authTokenGetter.bind(this);
   }
 
+  switchToLoader() {
+    this.props.parentCallback("Loader");
+  }
+
   authTokenGetter() {
     this.setState({ showButton: false });
     axios
@@ -19,10 +23,11 @@ export class SpotifyAuth extends Component {
           "location=yes,height=570,width=520,scrollbars=yes,status=yes";
         const URL = response.data;
         window.open(URL, "_blank", strWindowFeatures);
+        this.switchToLoader();
       })
-      .then(() => {
+      /*.then(() => {
         setTimeout(() => this.topListGetter(), 300); // timeOut for server to fetch token. 300ms is optimal value.
-      })
+      })*/
       .catch(error => {
         console.log(error);
       });
@@ -59,7 +64,9 @@ export class SpotifyAuth extends Component {
               className="landing__img"
               onClick={this.authTokenGetter}
             />
-          ) : null}
+          ) : (
+            <div>Подождите...</div>
+          )}
         </div>
       </div>
     );

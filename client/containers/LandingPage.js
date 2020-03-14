@@ -3,11 +3,15 @@ import SpotifyAuth from "../components/SpotifyAuth";
 import ManualInput from "../components/ManualInput";
 
 export class LandingPage extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <div className="landing">
         <div className="landing__container">
-          <SpotifyAuth />
+          <SpotifyAuth parentCallback={this.props.parentCallback} />
           <ManualInput />
         </div>
       </div>

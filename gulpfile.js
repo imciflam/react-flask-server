@@ -17,7 +17,7 @@ gulp.task("react-prod", function() {
     })
       .transform("babelify", { presets: ["env", "react"] })
       .bundle()
-      .pipe(source("bundle.js"))
+      .pipe(source("build.min.js"))
       .pipe(buffer())
       .pipe(uglify())
       //.pipe(gzip())
