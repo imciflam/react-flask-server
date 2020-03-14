@@ -10,10 +10,16 @@ body {
   text-align: center;
 }
 
+h1,
+input {
+  margin: 0;
+  padding: 0;
+}
+
 .landing__container {
   height: 100vh;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
@@ -27,8 +33,8 @@ body {
 }
 
 .landing__item {
-  width: 50%;
-  height: 100%;
+  height: 50%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,4 +42,28 @@ body {
 
 .landing__item--auth {
   background-color: #181818;
+}
+
+.landing__input {
+  width: 50%;
+}
+
+.landing__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 320px) {
+  .landing__container {
+    flex-direction: row;
+  }
+  .landing__item {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

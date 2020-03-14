@@ -46,15 +46,14 @@ export class ManualInput extends Component {
     return (
       <div className="landing__item landing__item--manual">
         <h1 className="visually-hidden">ManualInput</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Favourite band:
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          </label>
+        <form className="landing__form" onSubmit={this.handleSubmit}>
+          <label for="landing__input">Favourite band:</label>
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+            className="landing__input"
+          />
           <input type="submit" value="Отправить" />
         </form>
       </div>
