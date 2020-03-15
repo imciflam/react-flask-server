@@ -73,6 +73,10 @@
   font-size: 14px;
 }
 
+.audioplayer__item--active {
+  opacity: 0.5;
+}
+
 @media (min-width: 360px) {
   .audioplayer {
     padding: 0 100px;
