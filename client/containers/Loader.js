@@ -13,7 +13,7 @@ export class Loader extends Component {
           <svg version="1.2" viewport="0 0 60 60" className="loader__svg">
             <path
               className="loader__pulsar"
-              stroke="rgba(0,0,0,1)"
+              stroke="rgba(0,0,0,0.9)"
               fill="none"
               strokeWidth="1"
               strokeLinejoin="round"

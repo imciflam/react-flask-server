@@ -71,6 +71,7 @@
 }
 
 .landing__button {
+  cursor: pointer;
   margin: 16px 0;
   padding: 8px 16px;
   border: 1px solid #181818;
@@ -83,6 +84,7 @@
 .landing__input:focus {
   outline: 0;
 }
+
 @media (min-width: 320px) {
   .landing__container {
     flex-direction: row;

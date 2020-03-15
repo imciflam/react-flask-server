@@ -94,13 +94,11 @@ def cnnlist():
 @app.route('/cnnitem', methods=['GET', 'POST'])
 def cnnitem():
     input_data = request.json
-    top_tracks_data = getTopSongByArtist(input_data)
-    print(top_tracks_data)
+    top_tracks_data = getTopSongByArtist(input_data) 
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5001/cnn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    final_results = searchResults(json.loads(answer.text))
-    print(final_results)
+    final_results = searchResults(json.loads(answer.text)) 
     return json.dumps(final_results)
 
 

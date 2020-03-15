@@ -11,12 +11,17 @@ export class ManualInput extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  switchScreen(screen, data = "") {
+    this.props.parentCallback(screen, data);
+  }
+
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    this.switchScreen("Loader");
     axios
       .all([
         axios.post("/knnitem", JSON.stringify(this.state.value), {
@@ -37,12 +42,14 @@ export class ManualInput extends Component {
             newArr.push(data1[i], data2[i]);
           }
           console.log(newArr);
+          this.switchScreen("AudioPlayer", newArr);
           // deezer api as a fallback?
         })
       );
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="landing__item landing__item--manual">
         <h1 className="visually-hidden">ManualInput</h1>
@@ -61,7 +68,9 @@ export class ManualInput extends Component {
               placeholder="The Prodigy..."
             />
             <br />
-            <input className="landing__button" type="submit" value="Submit" />
+            <button className="landing__button" type="submit">
+              Submit
+            </button>
           </form>
         </div>
       </div>

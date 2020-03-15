@@ -31,8 +31,7 @@ export class SpotifyAuth extends Component {
       .catch(response => {
         console.log(response);
         if (response.status === 500) {
-          // or retry if 500
-          this.topListGetter();
+          // retry if 500?
         }
       });
   }

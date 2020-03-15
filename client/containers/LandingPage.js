@@ -11,7 +11,7 @@ export class LandingPage extends Component {
       <div className="landing">
         <div className="landing__container">
           <SpotifyAuth parentCallback={this.props.parentCallback} />
-          <ManualInput />
+          <ManualInput parentCallback={this.props.parentCallback} />
         </div>
       </div>
     );
