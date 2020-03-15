@@ -29,7 +29,6 @@ export class SpotifyAuth extends Component {
         setTimeout(() => this.topListGetter(), 500); // timeOut for server to fetch token. 500ms is optimal value.
       })
       .catch(response => {
-        console.log(response);
         if (response.status === 500) {
           // retry if 500?
         }

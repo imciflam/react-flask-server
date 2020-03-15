@@ -41,7 +41,6 @@ export class ManualInput extends Component {
           for (let i = 0; i < data1.length; i++) {
             newArr.push(data1[i], data2[i]);
           }
-          console.log(newArr);
           this.switchScreen("AudioPlayer", newArr);
           // deezer api as a fallback?
         })
@@ -49,7 +48,6 @@ export class ManualInput extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="landing__item landing__item--manual">
         <h1 className="visually-hidden">ManualInput</h1>
