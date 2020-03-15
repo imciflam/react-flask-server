@@ -44,7 +44,11 @@ export class ManualInput extends Component {
           this.switchScreen("AudioPlayer", newArr);
           // deezer api as a fallback?
         })
-      );
+      )
+      .catch(() => {
+        alert("Something went wrong. Please try another artist.");
+        this.switchScreen("LandingPage");
+      });
   }
 
   render() {
