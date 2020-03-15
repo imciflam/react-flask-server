@@ -21,7 +21,7 @@ export class AudioPlayer extends Component {
                   </audio>
                 </p>
                 <p>
-                  <img src={element[4]} width="450" height="450" alt="" />
+                  <img src={element[3]} width="450" height="450" alt="" />
                 </p>
               </li>
             );

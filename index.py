@@ -87,18 +87,17 @@ def cnnlist():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5001/cnn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    final_results = searchResults(json.loads(answer.text))
-    return json.dumps(final_results)
+    return json.dumps(json.loads(answer.text))
 
 
 @app.route('/cnnitem', methods=['GET', 'POST'])
 def cnnitem():
     input_data = request.json
-    top_tracks_data = getTopSongByArtist(input_data) 
+    top_tracks_data = getTopSongByArtist(input_data)
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5001/cnn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    final_results = searchResults(json.loads(answer.text)) 
+    final_results = searchResults(json.loads(answer.text))
     return json.dumps(final_results)
 
 
@@ -173,6 +172,7 @@ def getTopSongByArtist(input_data):
         for element in input_data:
             results = sp_limited.search(
                 q=element[0], type='artist')
+            clean_element = []
             if results["artists"]['items'] != []:
                 artist_uri = 'spotify:artist:' + \
                     results["artists"]["items"][0]["id"]
@@ -180,11 +180,16 @@ def getTopSongByArtist(input_data):
                     artist_uri, country='US')
                 for track in top_songs['tracks'][:10]:
                     if "preview_url" in track and track['preview_url'] != None:
-                        element.append(track['name'])
-                        element.append(track['preview_url'])
-                        element.append(element.pop(1))
-                        element.append(track['album']['images'][0]['url'])
-                        top_five_list.append(element)
+
+                        clean_element.insert(0, element[0])
+                        clean_element.insert(1, track['name'])
+                        clean_element.insert(2, track['preview_url'])
+
+                        clean_element.insert(3,
+                                             track['album']['images'][0]['url'])
+
+                        clean_element.insert(4, element[1])
+                        top_five_list.append(clean_element)
                         break
         return top_five_list[:5]
 
