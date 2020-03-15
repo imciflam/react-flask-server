@@ -97,8 +97,7 @@ def cnnitem():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5001/cnn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    final_results = searchResults(json.loads(answer.text))
-    return json.dumps(final_results)
+    return json.dumps(json.loads(answer.text))
 
 
 def searchResults(input_data):
