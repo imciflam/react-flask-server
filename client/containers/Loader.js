@@ -8,7 +8,9 @@ export class Loader extends Component {
         <div className="loader__container">
           <p className="loader__text">
             Generation of your personal musical recommendations can take up to
-            10 seconds. Please wait...
+            15 seconds.
+            <br />
+            Please wait...
           </p>
           <svg version="1.2" viewport="0 0 60 60" className="loader__svg">
             <path
