@@ -22,8 +22,9 @@ export class SpotifyAuth extends Component {
         const strWindowFeatures =
           "location=yes,height=570,width=520,scrollbars=yes,status=yes";
         const URL = response.data;
-        window.open(URL, "_blank", strWindowFeatures);
+        const openedWindow = window.open(URL, "_blank", strWindowFeatures);
         this.switchScreen("Loader");
+        openedWindow.close();
       })
       .then(() => {
         setTimeout(() => this.topListGetter(), 500); // timeOut for server to fetch token. 500ms is optimal value.
