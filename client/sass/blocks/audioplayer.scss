@@ -46,6 +46,15 @@
   color: #303030;
 }
 
+.audioplayer__item--active {
+  cursor: pointer;
+  padding: 5px 10px;
+  list-style: none;
+  border: 1px solid #181818;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
 .audioplayer__audio-container {
   width: 100%;
 }
@@ -71,10 +80,6 @@
 
 .audioplayer__title--artist {
   font-size: 14px;
-}
-
-.audioplayer__item--active {
-  opacity: 0.5;
 }
 
 @media (min-width: 360px) {

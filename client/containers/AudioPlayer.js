@@ -42,11 +42,10 @@ export class AudioPlayer extends Component {
                 <li
                   key={this.props.tracks.indexOf(element)}
                   className={
-                    "audioplayer__item" +
-                    (this.props.tracks.indexOf(element) ==
+                    this.props.tracks.indexOf(element) ==
                     this.state.currentTrack
-                      ? " audioplayer__item--active"
-                      : "")
+                      ? "audioplayer__item--active"
+                      : "audioplayer__item"
                   }
                   onClick={() => {
                     this.switchTrack(this.props.tracks.indexOf(element));
