@@ -64,6 +64,7 @@ export class SpotifyAuth extends Component {
               type="image"
               src="/static/img/Spotify_Icon_RGB_White.png"
               className="landing__img"
+              alt="spotify auth"
               onClick={this.authTokenGetter}
             />
           ) : (
