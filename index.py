@@ -131,10 +131,13 @@ def knnlist():
     for item in results['items']:
         artist = item['artists'][0]['name']
         top_tracks_data.append(artist)
+    print("knn")
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5002/knn',
                            json=json.dumps(top_tracks_data), headers=headers)
+    print(answer.text)
     final_results = getTopSongByArtist(json.loads(answer.text))
+    print(final_results)
     return json.dumps(final_results)
 
 

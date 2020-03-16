@@ -97,3 +97,9 @@
     justify-content: center;
   }
 }
+
+@media (min-width: 2560px) {
+  .landing__wrapper {
+    font-size: 3vh;
+  }
+}
