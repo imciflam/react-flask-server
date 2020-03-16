@@ -22,12 +22,12 @@ export class SpotifyAuth extends Component {
         const strWindowFeatures =
           "location=yes,height=570,width=520,scrollbars=yes,status=yes";
         const URL = response.data;
-        console.log(URL);
-        window.open(URL, "_blank", strWindowFeatures);
+        const win = window.open(URL, "_blank", strWindowFeatures);
+        return win;
       })
-      .then(() => {
+      .then(win => {
+        win.onunload = () => this.topListGetter();
         this.switchScreen("Loader");
-        setTimeout(() => this.topListGetter(), 100); // timeOut for server to fetch token. 500ms is optimal value.
       })
       .catch(() => {
         alert("Something went wrong. Please try another artist.");

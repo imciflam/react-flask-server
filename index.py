@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, jsonify, make_response, redir
 import json
 import requests
 from spotipy.oauth2 import SpotifyClientCredentials
+import time
 
 
 SPOTIPY_CLIENT_ID = '032bb2c730e645968318b1811d084943'
@@ -39,6 +40,7 @@ def index():
 @app.route("/token", methods=['GET', 'POST'])
 def Auth():
     auth_url = sp_oauth.get_authorize_url()
+    access_token = getToken() 
     return auth_url
 
 
@@ -57,11 +59,14 @@ def getToken():
             token_info = sp_oauth.get_access_token(code)
             access_token = token_info['access_token']
             return access_token
+        else:
+            print("no code")
 
 
 @app.route('/callback')
-def callback():
+def callback():  # isn't being called first time
     access_token = getToken()
+    print("callback")
     global sp
     # gets fb token if auto-d through fb!
     # throw warning about not being able to log in with fb
@@ -131,13 +136,10 @@ def knnlist():
     for item in results['items']:
         artist = item['artists'][0]['name']
         top_tracks_data.append(artist)
-    print("knn")
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5002/knn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    print(answer.text)
     final_results = getTopSongByArtist(json.loads(answer.text))
-    print(final_results)
     return json.dumps(final_results)
 
 
