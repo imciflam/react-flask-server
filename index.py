@@ -40,7 +40,7 @@ def index():
 @app.route("/token", methods=['GET', 'POST'])
 def Auth():
     auth_url = sp_oauth.get_authorize_url()
-    access_token = getToken() 
+    access_token = getToken()
     return auth_url
 
 
@@ -132,6 +132,7 @@ def knnlist():
     if results == []:
         results = sp.current_user_top_tracks(
             limit=5, offset=0, time_range='long_term')
+    print(results)
     top_tracks_data = []
     for item in results['items']:
         artist = item['artists'][0]['name']
@@ -139,7 +140,9 @@ def knnlist():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5002/knn',
                            json=json.dumps(top_tracks_data), headers=headers)
+    print(answer.text)
     final_results = getTopSongByArtist(json.loads(answer.text))
+    print(final_results)
     return json.dumps(final_results)
 
 
@@ -151,6 +154,7 @@ def knnitem():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5002/knn',
                            json=json.dumps(input_data_list), headers=headers)
+    print(json.loads(answer.text))
     final_results = getTopSongByArtist(json.loads(answer.text))
     return json.dumps(final_results)
 
@@ -159,6 +163,7 @@ def getTopSongByArtist(input_data):
     if isinstance(input_data, str):
         # get temp token!
         results = sp_limited.search(q=input_data, type='artist')
+        print(results)
         artist_uri = 'spotify:artist:'+results["artists"]["items"][0]["id"]
         top_songs = sp_limited.artist_top_tracks(artist_uri)
         top_songs_list = []

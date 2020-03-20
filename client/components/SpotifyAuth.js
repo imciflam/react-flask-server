@@ -23,32 +23,40 @@ export class SpotifyAuth extends Component {
           "location=yes,height=570,width=520,scrollbars=yes,status=yes";
         const URL = response.data;
         const win = window.open(URL, "_blank", strWindowFeatures);
-        return win;
-      })
-      .then(win => {
-        win.onunload = () => this.topListGetter();
-        this.switchScreen("Loader");
+        let interval = setInterval(() => {
+          if (win.closed) {
+            console.log("window is closed");
+            clearInterval(interval);
+            this.topListGetter();
+            this.switchScreen("Loader");
+          }
+        }, 1000);
       })
       .catch(() => {
-        alert("Something went wrong. Please try another artist.");
+        alert("Something went wrong. Please try again.");
         this.switchScreen("LandingPage");
       });
   }
 
   topListGetter() {
-    axios.all([axios.get("/knnlist"), axios.get("/cnnlist")]).then(
-      axios.spread((knn, cnn) => {
-        let arr1 = knn.data;
-        let data1 = arr1.map(element => [...element, "knn"]);
-        let arr2 = cnn.data;
-        let data2 = arr2.map(element => [...element, "cnn"]);
-        let newArr = [];
-        for (let i = 0; i < data1.length; i++) {
-          newArr.push(data1[i], data2[i]);
-        }
-        this.switchScreen("AudioPlayer", newArr);
-      })
-    );
+    axios
+      .all([axios.get("/knnlist"), axios.get("/cnnlist")])
+      .then(
+        axios.spread((knn, cnn) => {
+          let arr1 = knn.data;
+          let data1 = arr1.map(element => [...element, "knn"]);
+          let arr2 = cnn.data;
+          let data2 = arr2.map(element => [...element, "cnn"]);
+          let newArr = [];
+          for (let i = 0; i < data1.length; i++) {
+            newArr.push(data1[i], data2[i]);
+          }
+          this.switchScreen("AudioPlayer", newArr);
+        })
+      )
+      .catch(err => {
+        console.log("FAIL", err);
+      });
   }
 
   render() {
@@ -68,7 +76,7 @@ export class SpotifyAuth extends Component {
               onClick={this.authTokenGetter}
             />
           ) : (
-            <div>Подождите...</div>
+            <div>Wait for it...</div>
           )}
         </div>
       </div>
