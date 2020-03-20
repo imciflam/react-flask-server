@@ -26,7 +26,6 @@ export class SpotifyAuth extends Component {
         let interval = setInterval(() => {
           // polling. yes...
           if (win.closed) {
-            console.log("window is closed");
             clearInterval(interval);
             this.topListGetter();
             this.switchScreen("Loader");
@@ -56,7 +55,7 @@ export class SpotifyAuth extends Component {
         })
       )
       .catch(err => {
-        console.log("FAIL", err);
+        console.log("spread fail", err);
       });
   }
 

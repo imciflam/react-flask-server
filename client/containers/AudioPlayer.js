@@ -37,10 +37,10 @@ export class AudioPlayer extends Component {
   }
 
   switchTrack(key, old) {
-    this.setLocalStorage(key, old);
-    this.setState({ currentTrack: key });
+    this.setLocalStorage(this.state.currentTrack, old);
     const node = this.myRef.current;
     node.load();
+    this.setState({ currentTrack: key });
   }
 
   render() {
