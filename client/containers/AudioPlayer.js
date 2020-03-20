@@ -9,14 +9,41 @@ export class AudioPlayer extends Component {
     };
   }
 
-  switchTrack(key) {
+  componentDidMount() {
+    window.myRefParam = this.myRef.current;
+    window.currentTrackParam = this.state.currentTrack;
+    window.addEventListener("beforeunload", event => {
+      event.preventDefault();
+      if (event.currentTarget.myRefParam) {
+        this.setLocalStorage(
+          event.currentTarget.currentTrackParam,
+          event.currentTarget.myRefParam
+        );
+      }
+    });
+  }
+
+  setLocalStorage(key, old) {
+    if (old.played.length !== 0) {
+      let stringKey = key.toString();
+      let timeListened = old.played.end(0).toString();
+      if (localStorage.getItem(stringKey) === null) {
+        localStorage.setItem(stringKey, timeListened);
+      } else {
+        let currValue = localStorage.getItem(stringKey);
+        localStorage.setItem(stringKey, currValue + ";" + timeListened);
+      }
+    }
+  }
+
+  switchTrack(key, old) {
+    this.setLocalStorage(key, old);
     this.setState({ currentTrack: key });
     const node = this.myRef.current;
     node.load();
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="audioplayer">
         <h1 className="visually-hidden">AudioPlayer</h1>
@@ -48,7 +75,10 @@ export class AudioPlayer extends Component {
                       : "audioplayer__item"
                   }
                   onClick={() => {
-                    this.switchTrack(this.props.tracks.indexOf(element));
+                    this.switchTrack(
+                      this.props.tracks.indexOf(element),
+                      this.myRef.current
+                    );
                   }}
                 >
                   <div>

@@ -24,6 +24,7 @@ export class SpotifyAuth extends Component {
         const URL = response.data;
         const win = window.open(URL, "_blank", strWindowFeatures);
         let interval = setInterval(() => {
+          // polling. yes...
           if (win.closed) {
             console.log("window is closed");
             clearInterval(interval);
