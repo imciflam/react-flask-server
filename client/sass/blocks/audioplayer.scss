@@ -24,17 +24,19 @@
   padding: 0;
   border-radius: 5px;
   text-align: left;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
   width: 100%;
 }
 
 .audioplayer__item {
   cursor: pointer;
   display: flex;
-  padding: 10px;
+  padding: 14px 15px;
   list-style: none;
-  border-bottom: 1px solid #eeeeee;
-  font-size: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  height: calc(70vh / 10);
+  box-sizing: border-box;
 }
 
 .audioplayer__item:hover {
@@ -47,12 +49,14 @@
 }
 
 .audioplayer__item--active {
-  display: flex;
   cursor: pointer;
-  padding: 10px 10px;
+  display: flex;
+  padding: 14px 15px;
   list-style: none;
-  border-bottom: 1px solid #eeeeee;
-  font-size: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  height: calc(70vh / 10);
+  box-sizing: border-box;
   opacity: 0.5;
 }
 
@@ -87,7 +91,11 @@
   font-size: 14px;
 }
 
-@media (min-width: 360px) {
+audio::-webkit-media-controls-enclosure {
+  background: transparent;
+}
+
+@media (min-width: 480px) {
   .audioplayer {
     padding: 0 100px;
   }
@@ -103,20 +111,25 @@
 
   .audioplayer__image {
     height: 70vh;
-    width: auto;
+    width: 70vh;
   }
 
   .audioplayer__audio-kit {
-    width: 80%;
+    width: 93%;
     margin: 10px auto;
     height: 10vh;
     outline: none;
   }
-}
-/*
-@media (min-width: 1280px) {
-  .audioplayer p {
-    font-size: 2vh;
+
+  .audioplayer__title--name {
+    font-size: 1.5vw;
+  }
+
+  .audioplayer__title--artist {
+    font-size: 1vw;
+  }
+
+  .audioplayer__item {
+    font-size: 1vw;
   }
 }
-*/
