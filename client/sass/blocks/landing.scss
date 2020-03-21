@@ -85,6 +85,10 @@
   outline: 0;
 }
 
+.landing__button:hover {
+  background-color: #eeeeee;
+}
+
 @media (min-width: 360px) {
   .landing__container {
     flex-direction: row;

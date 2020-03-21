@@ -5,7 +5,8 @@ export class AudioPlayer extends Component {
     super(props);
     this.myRef = React.createRef();
     this.state = {
-      currentTrack: 0
+      currentTrack: 0,
+      paused: true
     };
   }
 
@@ -20,6 +21,10 @@ export class AudioPlayer extends Component {
           event.currentTarget.myRefParam
         );
       }
+    });
+    console.log(this.myRef.current);
+    this.myRef.current.addEventListener("pause", () => {
+      this.setState({ paused: true });
     });
   }
 
@@ -40,10 +45,15 @@ export class AudioPlayer extends Component {
     this.setLocalStorage(this.state.currentTrack, old);
     const node = this.myRef.current;
     node.load();
-    this.setState({ currentTrack: key });
+    node.play();
+    this.setState({ currentTrack: key, paused: false });
   }
 
   render() {
+    if (this.myRef.current) {
+      console.log(this.myRef.current.paused);
+      console.log(this.myRef.current.ended);
+    }
     return (
       <div className="audioplayer">
         <h1 className="visually-hidden">AudioPlayer</h1>
@@ -81,10 +91,55 @@ export class AudioPlayer extends Component {
                     );
                   }}
                 >
-                  <div>
-                    <p className="audioplayer__name">{element[0]}</p>
-                    <p className="audioplayer__artist">{element[1]}</p>
-                  </div>
+                  {this.props.tracks.indexOf(element) ===
+                    this.state.currentTrack &&
+                  this.myRef.current !== null &&
+                  !this.state.paused ? (
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 55 10"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="#303030"
+                    >
+                      <g transform="matrix(1 0 0 -2 0 35)">
+                        <rect width="12" height="15" rx="1">
+                          <animate
+                            attributeName="height"
+                            begin="0s"
+                            dur="4.3s"
+                            values="20;12;23;5;13;24;13;24;2;23;30;20;"
+                            calcMode="linear"
+                            repeatCount="indefinite"
+                          />
+                        </rect>
+                        <rect x="15" width="12" height="30" rx="1">
+                          <animate
+                            attributeName="height"
+                            begin="0s"
+                            dur="2s"
+                            values="30;23;5;15;23;30;12;14;22;10;30;"
+                            calcMode="linear"
+                            repeatCount="indefinite"
+                          />
+                        </rect>
+                        <rect x="30" width="12" height="20" rx="1">
+                          <animate
+                            attributeName="height"
+                            begin="0s"
+                            dur="2s"
+                            values="30;13;24;13;30;12;23;5;15;23;30;"
+                            calcMode="linear"
+                            repeatCount="indefinite"
+                          />
+                        </rect>
+                      </g>
+                    </svg>
+                  ) : (
+                    <span>{this.props.tracks.indexOf(element) + 1}</span>
+                  )}
+                  {/*<p className="audioplayer__artist">{element[0]}</p>*/}
+                  <p className="audioplayer__name">{element[1]}</p>
                 </li>
               );
             })}
