@@ -56,6 +56,8 @@ export class SpotifyAuth extends Component {
       )
       .catch(err => {
         console.log("spread fail", err);
+        alert("Something went wrong. Please try again.");
+        this.switchScreen("LandingPage");
       });
   }
 

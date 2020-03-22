@@ -50,19 +50,15 @@ export class AudioPlayer extends Component {
   }
 
   render() {
-    if (this.myRef.current) {
-      console.log(this.myRef.current.paused);
-      console.log(this.myRef.current.ended);
-    }
     return (
       <div className="audioplayer">
         <h1 className="visually-hidden">AudioPlayer</h1>
         <div className="audioplayer__title">
           <p className="audioplayer__title--name">
-            {this.props.tracks[this.state.currentTrack][1]}{" "}
+            {this.props.tracks[this.state.currentTrack][1]}
           </p>
           <p className="audioplayer__title--artist">
-            {this.props.tracks[this.state.currentTrack][0]}{" "}
+            {this.props.tracks[this.state.currentTrack][0]}
           </p>
         </div>
         <div className="audioplayer-container">
@@ -96,6 +92,7 @@ export class AudioPlayer extends Component {
                   this.myRef.current !== null &&
                   !this.state.paused ? (
                     <svg
+                      className="audioplayer__svg"
                       width="12"
                       height="12"
                       viewBox="0 0 55 10"
@@ -136,7 +133,9 @@ export class AudioPlayer extends Component {
                       </g>
                     </svg>
                   ) : (
-                    <span>{this.props.tracks.indexOf(element) + 1}</span>
+                    <span className="audioplayer__tracknumber">
+                      {this.props.tracks.indexOf(element) + 1}
+                    </span>
                   )}
                   {/*<p className="audioplayer__artist">{element[0]}</p>*/}
                   <p className="audioplayer__name">{element[1]}</p>

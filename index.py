@@ -131,7 +131,7 @@ def knnlist():
         limit=5, offset=0, time_range='medium_term')
     if results == []:
         results = sp.current_user_top_tracks(
-            limit=5, offset=0, time_range='long_term') 
+            limit=5, offset=0, time_range='long_term')
     top_tracks_data = []
     for item in results['items']:
         artist = item['artists'][0]['name']
@@ -139,9 +139,8 @@ def knnlist():
     headers = {'Content-Type': 'application/json'}
     answer = requests.post('http://127.0.0.1:5002/knn',
                            json=json.dumps(top_tracks_data), headers=headers)
-    print(answer.text)
-    final_results = getTopSongByArtist(json.loads(answer.text)) # can error here
-    print(final_results)
+    final_results = getTopSongByArtist(
+        json.loads(answer.text))  # can error here
     return json.dumps(final_results)
 
 
@@ -161,8 +160,9 @@ def knnitem():
 def getTopSongByArtist(input_data):
     if isinstance(input_data, str):
         # get temp token!
+        print(input_data)
         results = sp_limited.search(q=input_data, type='artist')
-        print(results)
+        print(input_data)
         artist_uri = 'spotify:artist:'+results["artists"]["items"][0]["id"]
         top_songs = sp_limited.artist_top_tracks(artist_uri)
         top_songs_list = []
@@ -178,8 +178,13 @@ def getTopSongByArtist(input_data):
         # searching for artist and track
         top_five_list = []
         for element in input_data:
+            print(element[0])
             results = sp_limited.search(
                 q=element[0], type='artist')
+            if results == None:
+                print("results None")
+            print(sp_limited)
+            print(results)
             clean_element = []
             if results["artists"]['items'] != []:
                 artist_uri = 'spotify:artist:' + \
@@ -188,7 +193,6 @@ def getTopSongByArtist(input_data):
                     artist_uri, country='US')
                 for track in top_songs['tracks'][:10]:
                     if "preview_url" in track and track['preview_url'] != None:
-
                         clean_element.insert(0, element[0])
                         clean_element.insert(1, track['name'])
                         clean_element.insert(2, track['preview_url'])
@@ -197,6 +201,7 @@ def getTopSongByArtist(input_data):
                                              track['album']['images'][0]['url'])
 
                         clean_element.insert(4, element[1])
+                        print(clean_element)
                         top_five_list.append(clean_element)
                         break
         return top_five_list[:5]

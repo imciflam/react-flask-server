@@ -9,6 +9,9 @@
 .audioplayer p {
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .audioplayer-container {
@@ -93,6 +96,14 @@
 
 audio::-webkit-media-controls-enclosure {
   background: transparent;
+}
+
+.audioplayer__tracknumber {
+  padding-right: 10px;
+}
+
+.audioplayer__svg {
+  padding-right: 10px;
 }
 
 @media (min-width: 480px) {

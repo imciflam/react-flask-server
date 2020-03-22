@@ -34,13 +34,22 @@ export class ManualInput extends Component {
       .then(
         axios.spread((knn, cnn) => {
           let arr1 = knn.data;
-          let data1 = arr1.map(element => [...element, "knn"]);
           let arr2 = cnn.data;
           let data2 = arr2.map(element => [...element, "cnn"]);
+          let data1 = arr1.map(element => [...element, "knn"]);
           let newArr = [];
-          for (let i = 0; i < data1.length; i++) {
-            newArr.push(data1[i], data2[i]);
+          if (arr1.length !== 0 && arr2.length !== 0) {
+            for (let i = 0; i < data1.length; i++) {
+              newArr.push(data1[i], data2[i]);
+            }
+          } else {
+            if (arr1.length !== 0) {
+              arr1.forEach(element => newArr.push(element));
+            } else if (arr2.length !== 0) {
+              arr2.forEach(element => newArr.push(element));
+            }
           }
+          console.log(newArr);
           this.switchScreen("AudioPlayer", newArr);
           // deezer api as a fallback?
         })
