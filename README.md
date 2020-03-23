@@ -1,7 +1,8 @@
 # spotify-flask-server
 
 This repo contains the source code for one of the servers of the Anitra music recommendation system.
-Project is under development.
+
+![anitra player pic](https://imciflam.github.io/images/anitra.png)
 
 ### for prod build: 
 
