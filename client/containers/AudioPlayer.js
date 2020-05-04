@@ -36,7 +36,7 @@ export class AudioPlayer extends Component {
         localStorage.setItem(stringKey, timeListened);
       } else {
         let currValue = localStorage.getItem(stringKey);
-        localStorage.setItem(stringKey, currValue + ";" + timeListened);
+        localStorage.setItem(stringKey, currValue + "," + timeListened);
       }
     }
   }
